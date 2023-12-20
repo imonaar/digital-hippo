@@ -27,7 +27,7 @@ export default function Page() {
     })
 
     const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-
+        
     }
 
     return (
