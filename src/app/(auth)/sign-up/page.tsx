@@ -1,18 +1,18 @@
 "use client"
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-
 import { ArrowRight } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+import { AuthCredentialsValidator, TAuthCredentialsValidator } from '@/lib/validators/account-cred-validator';
+import { trpc } from '@/trpc/client';
 
 import { Icons } from "@/components/icons";
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
-
-import { AuthCredentialsValidator, TAuthCredentialsValidator } from '@/lib/validators/account-cred-validator';
 
 export default function Page() {
 
@@ -26,8 +26,12 @@ export default function Page() {
         resolver: zodResolver(AuthCredentialsValidator)
     })
 
+    const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
+
+    })
+
     const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-        
+        mutate({email, password})
     }
 
     return (
@@ -59,6 +63,7 @@ export default function Page() {
                                 <div className='grid gap-1 py-2'>
                                     <Label htmlFor='password'>Password</Label>
                                     <Input
+                                    type='password'
                                         {...register('password')}
                                         className={cn({ 'focus-visible:ring-red-500': errors.password })}
                                         placeholder='password'

@@ -7,8 +7,8 @@ const handler = (req: Request) => {
         endpoint: '/api/trpc',
         req,
         router: appRouter,
-        //app router is literally our backend! huh, a lot of routing
-        // client -> express -> nextjs api -> trpc
+        //appRouter is literally our backend! huh, a lot of routing
+        // client -> express server -> nextjs api -> trpc
         createContext: () => ({})
     })
 }
